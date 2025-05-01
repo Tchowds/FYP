@@ -10,14 +10,8 @@ public class DeletionWarning : MonoBehaviour
     [SerializeField] private TMP_Text warningText;
     [SerializeField] private Button deleteButton;
     [SerializeField] private bool isPoseSelection = true; // true for pose, false for gesture
-    private string warningMessage;
     private string name;
 
-
-    void Start()
-    {
-        warningMessage = warningText.text;
-    }
 
 
     void Awake()
@@ -34,7 +28,7 @@ public class DeletionWarning : MonoBehaviour
     public void setWarningText(string name)
     {
         this.name = name;
-        warningText.text = warningMessage + name;
+        warningText.text = "WARNING: This deletion action is permanent and cannot be undone. \nThe following pose/gesture will be deleted:"+ name;
     }
 
 

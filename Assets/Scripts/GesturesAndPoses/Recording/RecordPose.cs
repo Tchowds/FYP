@@ -16,7 +16,7 @@ public class RecordPose : Recorder
     [SerializeField] private float endTime = 10f;
 
     // This class is responsible for recording the pose data of the hand
-    private HandPoseCalculations poseCalculator;
+    [SerializeField] private HandPoseCalculations poseCalculator;
     private float nextRecordTime;
     private float startTime;
     private List<float[]> newPoseData;
@@ -41,7 +41,10 @@ public class RecordPose : Recorder
         // If the end time has passed, add all the pose data using the DataInterface and stop recording
         else if (Time.time - startTime >= endTime)
         {
-            DataInterface.addNewPoseData(nextToRecordName, newPoseData.ToArray());
+            if (recordingMode == RecordingMode.NEW) DataInterface.addNewPoseData(nextToRecordName, newPoseData.ToArray());
+            else if (recordingMode == RecordingMode.RETRAIN) DataInterface.retrainPose(nextToRecordName, newPoseData.ToArray());
+            else if (recordingMode == RecordingMode.ENHANCE) DataInterface.enhancePose(nextToRecordName, newPoseData.ToArray());
+            // DataInterface.addNewPoseData(nextToRecordName, newPoseData.ToArray());
             StopRecording();
         }
     }
